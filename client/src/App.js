@@ -1,7 +1,7 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 import Login from './pages/Login';
-import NavBar from './components/NavBar';
+import NavBar from './components/NavBar/NavBar';
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home';
 import Rooms from './pages/Rooms';

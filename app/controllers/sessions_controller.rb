@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
+    rescue_from ActiveRecord::RecordNotFound, with: :render_unprocessable_entity_response
 
     def create
         @user = User.find_by(username: params[:username])
@@ -24,6 +25,10 @@ class SessionsController < ApplicationController
 
     def render_not_found_response
        render json: { error: "User not found" }, status: :not_found 
+    end
+
+    def render_unprocessable_entity_response(invalid)
+        render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
     end
 
 end
