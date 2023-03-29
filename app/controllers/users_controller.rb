@@ -21,10 +21,15 @@ class UsersController < ApplicationController
         end
     end
 
+    def update
+        @user = User.find(params[:id])
+        @user.update!(user_params)
+    end
+
     private
 
     def user_params
-        params.permit(:username, :password, :password_confirmation)
+        params.permit(:username, :email, :password, :password_confirmation, :first_name, :last_name)
     end
 
     def render_unprocessable_entity_response(invalid)
