@@ -23,3 +23,24 @@ Things you may want to cover:
 
 * ...
 # reservation-App
+
+
+## User Stories
+
+As a user, I can sign up for an account with a unique username and email, and create a password to access my account.
+
+As a user, I can view a list of available rooms that are listed by other users on the website.
+
+As a user, I can search for a specific room based on its location, number of guests it accommodates, and other amenities.
+
+As a user, I can book a reservation for a specific room for a certain date range, and receive confirmation of my booking.
+
+As a user, I can view a list of all of my past and upcoming reservations, and cancel a reservation if necessary.
+
+As a user, I can leave a review of a room that I have stayed in, including a rating and written feedback.
+
+As a administator, I can create a listing for my room with details such as the number of guests it can accommodate etc
+
+As a admin, I can manage my listing by updating information, setting availability, and accepting or declining reservation requests.
+
+As an administrator, I can manage the user database, including the ability to delete users or listings if necessary.
