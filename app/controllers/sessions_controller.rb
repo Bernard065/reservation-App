@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+    rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
 
     def create
         @user = User.find_by(username: params[:username])
@@ -18,4 +19,11 @@ class SessionsController < ApplicationController
             render json: { errors: "You are not logged in" }, status: :unauthorized
         end
     end
+
+    private
+
+    def render_not_found_response
+       render json: { error: "User not found" }, status: :not_found 
+    end
+
 end
