@@ -7,62 +7,56 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 puts "🦸‍♀️ Seeding powers..."
-# create users
+
+# Create 10 users
 10.times do
-  User.create!(
-    username: Faker::Internet.username(specifier: 5..8),
-    email: Faker::Internet.email,
-    password_digest: "password",
+  User.create(
+    username: Faker::Internet.unique.username,
+    email: Faker::Internet.unique.email,
+    password: 'password',
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name
   )
 end
 
-# create rooms
+
+# Create 10 rooms
 10.times do
-  Room.create!(
-    title: Faker::Lorem.sentence(word_count: 3),
-    description: Faker::Lorem.paragraph(sentence_count: 2),
-    num_guests: rand(1..4),
-    num_beds: rand(1..3),
-    num_baths: rand(1..2),
+  Room.create(
+    name: Faker::Lorem.words(number: 2).join(' '),
+    category: ['Single', 'Double', 'Triple', 'Quad'].sample,
     price: rand(50..200),
-    self_check_in: Faker::Boolean.boolean,
-    wifi: Faker::Boolean.boolean,
-    tv: Faker::Boolean.boolean,
-    bathroom_essentials: Faker::Boolean.boolean,
-    bedroom_comforts: Faker::Boolean.boolean,
-    coffee_maker: Faker::Boolean.boolean,
-    hair_dryer: Faker::Boolean.boolean,
-    location: Faker::Address.city,
-    location_description: Faker::Lorem.sentence(word_count: 6),
-    img_url: Faker::LoremFlickr.image(size: "600x400"),
-    booked: false
+    size: rand(20..50),
+    capacity: rand(1..4),
+    breakfast: [true, false].sample,
+    featured: [true, false].sample,
+    description: Faker::Lorem.paragraph,
+    extras: ['Wi-Fi', 'TV', 'Mini-bar', 'Balcony', 'Air conditioning'].sample(3).join(', '),
+    img_url: Faker::LoremFlickr.image(size: "300x200", search_terms: ['hotel'])
   )
 end
 
-# create reservations
-10.times do
-  start_date = Faker::Date.between(from: Date.today, to: 1.year.from_now)
-  end_date = Faker::Date.between(from: start_date + 1.day, to: start_date + 1.week)
 
-  Reservation.create!(
-    start_date: start_date,
-    end_date: end_date,
+# Create 10 reservations
+10.times do
+  Reservation.create(
+    start_date: Faker::Date.forward(days: 10),
+    end_date: Faker::Date.forward(days: 20),
     num_guests: rand(1..4),
     user_id: User.pluck(:id).sample,
     room_id: Room.pluck(:id).sample
   )
 end
 
-# create reviews
+# Create 10 reviews
 10.times do
-  Review.create!(
+  Review.create(
     rating: rand(1..5),
-    content: Faker::Lorem.paragraph(sentence_count: 3),
+    content: Faker::Lorem.paragraph,
     user_id: User.pluck(:id).sample,
     room_id: Room.pluck(:id).sample
   )
 end
+
 
 puts "🦸‍♀️ Done seeding!"

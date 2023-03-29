@@ -1,0 +1,38 @@
+.rooms-header {
+    background-image: url("../../assests/room-2.jpeg");
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 80px;
+}
+
+.banner {
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+    text-transform: capitalize;
+    letter-spacing: var(--mainSpacing);
+}
+
+.banner div {
+    width: 10rem;
+    height: 5px;
+    background: var(--primaryColor);
+    margin: 1.7rem auto;
+}
+
+@media screen and (min-width: 576px) {
+    .banner {
+      padding: 2rem 3rem;
+    }
+
+}
+@media screen and (min-width: 992px) {
+    .banner {
+      padding: 2rem 6rem;
+    }
+
+}
