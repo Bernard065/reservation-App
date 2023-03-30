@@ -1,14 +1,14 @@
 import './App.css';
 import { useEffect, useState } from 'react';
-import Login from './pages/Login';
+import Login from './pages/Login/Login';
 import NavBar from './components/NavBar/NavBar';
 import { Routes, Route } from 'react-router-dom'
-import Home from './pages/Home';
-import Rooms from './pages/Rooms';
-import RoomDetails from './components/RoomDetails';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import Footer from './components/Footer';
+import Home from './pages/Home/Home';
+import Rooms from './pages/Rooms/Rooms';
+import RoomDetails from './components/RoomDetails/RoomDetails';
+import About from './pages/About/About';
+import Contact from './pages/Contact/Contact';
+import Footer from './components/Footer/Footer';
 
 function App() {
   const [user, setUser] = useState(null);

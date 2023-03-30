@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :users, only: [:update]
   resources :reservations
-  resources :reviews
+  resources :reviews, only: [:create, :update, :destroy]
   resources :rooms
 
   get "/me", to: "users#show"

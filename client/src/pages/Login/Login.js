@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import LoginForm from '../components/LoginForm'
-import SignUpForm from '../components/SignUpForm'
-import { Button } from '../styles'
+import LoginForm from '../../components/LoginForm/LoginForm'
+import SignUpForm from '../../components/SignUpForm/SignUpForm'
+import { Button } from '../../styles'
 
 const Login = ({ onLogin }) => {
   const [showLogin, setShowLogin] = useState(true)

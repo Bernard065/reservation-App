@@ -1,0 +1,53 @@
+.services {
+    margin: 4rem 0;
+  }
+  
+  .services h1 {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+  }
+  
+  .services-center {
+    width: 90vw;
+    margin: 0 auto;
+    max-width: 1170px;
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+  
+  .service {
+    background: #f5f5f5;
+    padding: 2rem;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s linear;
+  }
+  
+  .service:hover {
+    background: #fff;
+    transform: translateY(-10px);
+  }
+  
+  .service span {
+    display: block;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #f15025;
+  }
+  
+  .service h6 {
+    font-size: 1.5rem;
+    text-transform: capitalize;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  .service p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: #777;
+  }
+  
