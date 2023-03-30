@@ -24,22 +24,27 @@ const RoomDetails = () => {
   return (
     <div>
       <Header />
-      <div>
-        <h2>{room.name}</h2>
-        <p>{room.category}</p>
-        <p>${room.price}</p>
-        <p>{room.size} Sq. feet</p>
-        <p>{room.capacity} person(s) capacity</p>
-        <p>{room.breakfast ? 'Breakfast included' : 'No breakfast included'}</p>
-        <p>{room.description}</p>
-        <ul>
-          {Array.isArray(room.extras) && room.extras.map(extra => (
-            <li key={extra.id}>{extra.name}</li>
-          ))}
-        </ul>
+      <div className='room-details-container'>
         <img src={room.img_url} alt={room.name} />
-        <button>Book Now</button>
+        <div className='room-details-info'>
+          <article>
+            <h3>Details:</h3>
+            <p>{room.description}</p>
+          </article>
+          <article className='info'>
+            <h3>Information:</h3>
+            <h6>Price: ${room.price}</h6>
+            <h6>Size: {room.size} Sq. feet</h6>
+            <h6>Max capacity: {room.capacity} person(s)</h6>
+            <h6>{room.breakfast ? 'Breakfast included' : 'No breakfast included'}</h6>
+          </article>
+        </div>        
       </div>
+      <div className='room-extras'>
+        <h6>Extras:</h6>
+        {room.extras}
+      </div>
+      <button className='book-now-btn'>Book Now</button>
     </div>
   );
 };
