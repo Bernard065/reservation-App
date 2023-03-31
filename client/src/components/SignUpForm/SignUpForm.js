@@ -1,24 +1,26 @@
-import React, { useState } from 'react'
-import { Button, Error, Input, FormField, Label } from '../../styles'
+import React, { useState } from 'react';
+import { Button, Error, Input, FormField, Label } from '../../styles';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpForm = ({ onLogin }) => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] =useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
     setIsLoading(true);
-    fetch("signup", {
-      method: "POST",
+    fetch('signup', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         username,
@@ -31,12 +33,18 @@ const SignUpForm = ({ onLogin }) => {
     }).then((r) => {
       setIsLoading(false);
       if (r.ok) {
-        r.json().then((user) => onLogin(user));
-      } else{
+        r.json().then((user) => {
+          onLogin(user);
+          window.alert("Registration Successful! You will be logged in automatically")
+
+          navigate('/');
+        
+        });
+      } else {
         r.json().then((error) => setErrors(error.errors));
       }
-    })
-  }
+    });
+  };
   return (
     <form onSubmit={handleSubmit}>
       <FormField>
@@ -51,7 +59,7 @@ const SignUpForm = ({ onLogin }) => {
       </FormField>
       <FormField>
         <Label htmlFor='email'>Email</Label>
-        <Input 
+        <Input
           type='email'
           id='email'
           autoComplete='off'
@@ -61,7 +69,7 @@ const SignUpForm = ({ onLogin }) => {
       </FormField>
       <FormField>
         <Label htmlFor='password'>Password</Label>
-        <Input 
+        <Input
           type='password'
           id='password'
           autoComplete='off'
@@ -81,7 +89,7 @@ const SignUpForm = ({ onLogin }) => {
       </FormField>
       <FormField>
         <Label htmlFor='firstName'>First Name</Label>
-        <Input 
+        <Input
           type='text'
           id='first_name'
           autoComplete='off'
@@ -91,7 +99,7 @@ const SignUpForm = ({ onLogin }) => {
       </FormField>
       <FormField>
         <Label htmlFor='lastName'>Last Name</Label>
-        <Input 
+        <Input
           type='text'
           id='last_name'
           autoComplete='off'
@@ -100,7 +108,7 @@ const SignUpForm = ({ onLogin }) => {
         />
       </FormField>
       <FormField>
-        <Button type='submit'>{isLoading ? "Loading..." : "Sign Up"}</Button>
+        <Button type='submit'>{isLoading ? 'Loading...' : 'Sign Up'}</Button>
       </FormField>
       <FormField>
         {errors.map((error) => (
@@ -108,7 +116,7 @@ const SignUpForm = ({ onLogin }) => {
         ))}
       </FormField>
     </form>
-  )
-}
+  );
+};
 
-export default SignUpForm
+export default SignUpForm;

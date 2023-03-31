@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :users, only: [:update]
+  resources :users, only: [:show, :create, :update]
   resources :reservations
   resources :reviews, only: [:index, :create]
   resources :rooms
