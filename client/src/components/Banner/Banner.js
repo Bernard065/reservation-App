@@ -7,7 +7,7 @@ const Banner = () => {
     <div className='banner-img'>
       <div className='banner'>
         <h1>Luxurious Rooms</h1>
-        <p>Deluxe rooms for as low as $299</p>
+        <p>Deluxe rooms for affordable prices</p>
         <Link to="/rooms" className="btn-primary">
             our rooms
         </Link>

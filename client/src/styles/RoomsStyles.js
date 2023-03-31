@@ -5,6 +5,26 @@ text-align: center;
 margin-bottom: 50px;
 margin-top: 30px
 `;
+export const SearchContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+
+    input {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+  }
+`;
+
 
 export const RoomsContainer = styled.div`
   display: flex;
@@ -50,9 +70,17 @@ export const RoomCard = styled.div`
     transition: background-color 0.3s ease;
 
     &:hover {
-      background-color: #16a085;
-      background-color: #8d3e89;
+      background-color: #9c5b89;
       background-image: linear-gradient(to bottom right, #8d3e89, #d98f4f);
     }
   }
+
+  @media (max-width: 768px) {
+    width: 45%;
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+  }
 `;
+
