@@ -9,6 +9,7 @@ import RoomDetails from './components/RoomDetails/RoomDetails';
 import About from './pages/About/About';
 import Contact from './pages/Contact/Contact';
 import Footer from './components/Footer/Footer';
+import Reservations from './components/Reservations/Reservations';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -32,6 +33,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} /> 
         <Route path='/footer' element={<Footer />} />
+        <Route path='/reservations' element={<Reservations />} />
       </Routes>
     </>
   );

@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header';
+import 'react-datepicker/dist/react-datepicker.css';
 import './roomdetails.css';
 
 const RoomDetails = () => {
   const { id } = useParams();
   const [room, setRoom] = useState(null);
-  const [booking, setBooking] = useState({
-    room: null,
-    checkInDate: null,
-    checkOutDate: null,
-  });
-  const [focusedInput, setFocusedInput] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`/rooms/${id}`)
@@ -19,33 +16,10 @@ const RoomDetails = () => {
       .then(setRoom);
   }, [id]);
 
-  const handleBookRoom = (room) => {
-    setBooking({
-      room: room,
-      checkInDate: null,
-      checkOutDate: null,
-    });
-  }
+  const handleBookNowClick = () => {
+    navigate('/reservations');
+  };
 
-  const handleCheckInChange = (date) => {
-    setBooking({
-      ...booking,
-      checkInDate: date,
-    });
-  }
-
-  const handleCheckOutChange = (date) => {
-    setBooking({
-      ...booking,
-      checkOutDate: date,
-    });
-  }
-
-  const handleBookRoomSubmit = (e) => {
-    e.preventDefault();
-    // Send reservation request to server with booking details
-    console.log('Booking details:', booking);
-  }
 
   if (!room) {
     return (
@@ -82,7 +56,7 @@ const RoomDetails = () => {
         </div>        
       </div>
      
-      <button className='book-now-btn'>Book Now</button>
+      <button className='book-now-btn' onClick={handleBookNowClick}>Book Now</button>
     </div>
   );
 };

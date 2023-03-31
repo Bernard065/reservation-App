@@ -1,0 +1,42 @@
+.reservation-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem auto;
+    max-width: 600px;
+    padding: 2rem;
+    border: 1px solid #ccc;
+}
+  
+.reservation-date {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+  
+.reservation-label {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+  
+.reservation-input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+}
+  
+.reservation-button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #ab48c9;
+    color: #fff;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+  
+.reservation-button:hover {
+    background-color: #6c2f8f;
+}
+  
