@@ -53,6 +53,7 @@ class ReservationsController < ApplicationController
         head :no_content
     end
 
+
     private
 
     def reservation_params

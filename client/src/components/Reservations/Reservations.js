@@ -5,17 +5,18 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './reservations.css'
 
 const Reservations = () => {
-  const [selectedRoom, setSelectedRoom] = useState(null);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [error, setError] = useState(null);
+  const [selectedRoom, setSelectedRoom] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [numGuests, setNumber] = useState('')
+  const [error, setError] = useState([]);
   const [success, setSuccess] = useState(false);
 
   const navigate = useNavigate();
 
   const handleBooking = (event) => {
     event.preventDefault();
-    if (selectedRoom && startDate && endDate) {
+  
       fetch('/reservations', {
         method: 'POST',
         headers: {
@@ -24,7 +25,8 @@ const Reservations = () => {
         body: JSON.stringify({
           room_id: selectedRoom.id,
           start_date: startDate,
-          end_date: endDate
+          end_date: endDate,
+          num_guests: numGuests
         })
       })
       .then(response => {
@@ -39,7 +41,6 @@ const Reservations = () => {
       .catch(error => {
         setError(error.message)
       });
-    };
   }
 
   // if (!room) {
