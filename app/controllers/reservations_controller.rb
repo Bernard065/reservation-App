@@ -5,50 +5,32 @@ class ReservationsController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
 
     def index
-        if session[:user_id]
-            @reservations = Reservation.all
-            render json: @reservations, status: :ok
-        else
-            render json: { errors: "You are not logged in" }, status: :unauthorized
-        end
-    end
-
-    def show
-        if session[:user_id]
-            @reservation = find_reservation
-            render json: @reservation, status: :ok
-        else
-            render json: { error: "You are not logged in" }, status: :unauthorized
-        end
+        @reservations = Reservation.includes(:room).where(user_id: session[:user_id]).order(created_at: :desc)
+        render json: @reservations, include: :room, status: :ok
     end
 
     def create
-        if session[:user_id]
-            @user = User.find(session[:user_id])
-            @reservation = @user.reservations.new(reservation_params)
-            if @reservation.valid?
-                @reservation.save!
-                render json: @reservation, status: :created
-            else
-                render json: { errors: @reservation.errors.full_messages }, status: :unprocessable_entity
-            end
-        else
-            render json: { errors: "You are not logged in" },
-            status: :unauthorized
-        end
-    end
-
-    def update
-        @reservation = find_reservation
-        if @reservation.update!(reservation_params)
-            render json: @reservation, status: :ok
+        room = Room.find(params[:room_id])
+        @reservation = Reservation.new(reservation_params.merge(room: room, user_id: session[:user_id]))
+        if @reservation.save!
+          render json: @reservation, status: :created
         else
             render json: { errors: @reservation.errors.full_messages }, status: :unprocessable_entity
         end
     end
 
+    def update
+        @reservation = Reservation.where(user_id: session[:user_id], id: params[:id]).first
+        if @reservation.update!(reservation_params)
+          render json: @reservation, status: :ok
+        else
+            render json: { errors: @reservation.errors.full_messages }, status: :unprocessable_entity
+        end
+    end
+      
+
     def destroy
-        @reservation = find_reservation
+        @reservation = Reservation.where(user_id: session[:user_id]).find(params[:id])
         @reservation.destroy
         head :no_content
     end
@@ -57,12 +39,9 @@ class ReservationsController < ApplicationController
     private
 
     def reservation_params
-        params.permit(:start_date, :end_date, :num_guests, :room_id)
+        params.permit(:start_date, :end_date, :num_guests)
     end
 
-    def find_reservation
-        Reservation.find(params[:id])
-    end
 
     def authorize
         return render json: { error: "Not authorized" }, status: :unauthorized unless session.include? :user_id

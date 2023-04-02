@@ -1,0 +1,56 @@
+.update-user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px auto;
+    max-width: 600px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .update-user h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .update-user p {
+    color: green;
+    font-size: 1.2rem;
+    margin: 10px 0;
+  }
+  
+  .update-user form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .update-user label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+  }
+  
+  .update-user input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    margin-top: 5px;
+  }
+  
+  .update-user button {
+    background-color: #e272e2;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+  .update-user button:hover {
+    background-color: #630a63;
+  }

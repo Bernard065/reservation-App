@@ -14,6 +14,7 @@ import Profile from './components/Profile/Profile';
 
 function App() {
   const [user, setUser] = useState(null);
+  const [room, setRoom] = useState(null);
 
   useEffect(() => {
     fetch("/me").then((r) => {
@@ -29,12 +30,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/rooms" element={<Rooms />} />
-        <Route path="/rooms/:id" element={<RoomDetails />} />
+        <Route path="/rooms/:id" element={<RoomDetails user={user} room={room} setRoom={setRoom} />} />
         <Route path="/login" element={<Login onLogin={setUser} />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} /> 
         <Route path='/footer' element={<Footer />} />
-        <Route path='/reservations' element={<Reservations />} />
+        <Route path='/reservations' element={<Reservations user={user} room={room} />} />
         <Route path='/profile' element={<Profile user={user} setUser={setUser} />} />
       </Routes>
     </>

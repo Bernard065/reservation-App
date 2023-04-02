@@ -1,0 +1,41 @@
+.reservations-list {
+    font-family: Arial, sans-serif;
+    margin: 20px auto;
+    max-width: 800px;
+    text-align: center;
+}
+  
+.reservations-list h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+  
+.reservations-list table {
+    border-collapse: collapse;
+    margin: 0 auto;
+    width: 100%;
+}
+  
+.reservations-list th, .reservations-list td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+  }
+  
+.reservations-list th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+  
+.reservations-list td button {
+    background-color: #ff3d3d;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+}
+  
+.reservations-list td button:hover {
+    background-color: #c73030;
+}
+  

@@ -23,30 +23,21 @@ end
 # Create 10 rooms
 10.times do
   Room.create(
-    name: Faker::Lorem.words(number: 2).join(' '),
+    name: "Room #{rand(100)}",
     category: ['Single', 'Double', 'Triple', 'Quad'].sample,
     price: rand(50..200),
     size: rand(20..50),
     capacity: rand(1..4),
     breakfast: [true, false].sample,
     featured: [true, false].sample,
-    description: Faker::Lorem.paragraph,
+    description: "This is a description of Room #{rand(100)}.",
     extras: ['Wi-Fi', 'TV', 'Mini-bar', 'Balcony', 'Air conditioning'].sample(3).join(', '),
-    img_url: Faker::LoremFlickr.image(size: "300x200", search_terms: ['hotel'])
+    img_url: "https://picsum.photos/300/200?random=#{rand(100)}"
   )
 end
 
 
-# Create 10 reservations
-10.times do
-  Reservation.create(
-    start_date: Faker::Date.forward(days: 10),
-    end_date: Faker::Date.forward(days: 20),
-    num_guests: rand(1..4),
-    user_id: User.pluck(:id).sample,
-    room_id: Room.pluck(:id).sample
-  )
-end
+
 
 # Create 10 reviews
 10.times do
@@ -59,4 +50,4 @@ end
 end
 
 
-puts "🦸‍♀️ Done seeding!"
+puts "🦸‍♀️ Done seeding!"  

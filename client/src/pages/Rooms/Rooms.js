@@ -29,7 +29,6 @@ const Rooms = () => {
 
   const filteredRooms = rooms.filter(filterRooms)
 
-  
 
 
   return (

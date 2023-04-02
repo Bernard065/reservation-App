@@ -4,22 +4,25 @@ import Header from '../../components/Header/Header';
 import 'react-datepicker/dist/react-datepicker.css';
 import './roomdetails.css';
 
-const RoomDetails = () => {
+const RoomDetails = ({ user, room, setRoom }) => {
   const { id } = useParams();
-  const [room, setRoom] = useState(null);
-
+  const [errorMessage, setErrorMessage] = useState('');
+ 
   const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`/rooms/${id}`)
       .then(response => response.json())
       .then(setRoom);
-  }, [id]);
+  }, [id, setRoom]);
 
   const handleBookNowClick = () => {
+    if (!user){
+      setErrorMessage("You must be logged in to make a reservation")
+      return
+    }
     navigate('/reservations');
   };
-
 
   if (!room) {
     return (
@@ -31,8 +34,9 @@ const RoomDetails = () => {
   }
 
   return (
-    <div>
+    <div className='room-details-page'>
       <Header />
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
       <div className='room-details-container'>
         <div className='image'>
           <img src={room.img_url} alt={room.name} />
@@ -53,10 +57,9 @@ const RoomDetails = () => {
             <h6 className='extras'>Extras:</h6>
             {room.extras}
           </article>
-        </div>        
+        </div>   
+        <button className='book-now-btn' onClick={handleBookNowClick}>Book Now</button>     
       </div>
-     
-      <button className='book-now-btn' onClick={handleBookNowClick}>Book Now</button>
     </div>
   );
 };

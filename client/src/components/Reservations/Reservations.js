@@ -4,43 +4,33 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './reservations.css'
 
-const Reservations = () => {
-  const [selectedRoom, setSelectedRoom] = useState('');
+const Reservations = ({ user, room }) => {
+  //const [room, setRoom] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [numGuests, setNumber] = useState('')
+  const [numGuests, setNumGuests] = useState('')
   const [error, setError] = useState([]);
-  const [success, setSuccess] = useState(false);
-
+  
   const navigate = useNavigate();
 
-  const handleBooking = (event) => {
+  const handleBooking = async(event) => {
     event.preventDefault();
+    const response = await fetch('/reservations', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        start_date: startDate,
+        end_date: endDate,
+        num_guests: numGuests,
+        user_id: user.id,
+        room_id: room.id,
+      }),
+    });
+    const data = await response.json();
+    //navigate("/my-reservations");
   
-      fetch('/reservations', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          room_id: selectedRoom.id,
-          start_date: startDate,
-          end_date: endDate,
-          num_guests: numGuests
-        })
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('There was an error booking your reservation. Please try again.');
-        }
-        setSuccess(true);
-        setTimeout(() => {
-          navigate('/');
-        }, 2000);
-      })
-      .catch(error => {
-        setError(error.message)
-      });
   }
 
   // if (!room) {
@@ -49,6 +39,9 @@ const Reservations = () => {
   
   return (
     <div className="reservation-container">
+      <h1>Name: {room.name}</h1>
+      <p>Description: {room.description}</p>
+      <p>Price: ${room.price}</p>
       <form onSubmit={handleBooking}>
         <div className="reservation-date">
           <label className="reservation-label">Check-in Date:</label>
@@ -57,6 +50,10 @@ const Reservations = () => {
         <div className="reservation-date">
           <label className="reservation-label">Check-out Date:</label>
           <DatePicker className="reservation-input" selected={endDate} onChange={date => setEndDate(date)} />
+        </div>
+        <div className="reservation-date">
+          <label className="reservation-label">Number of Guests:</label>
+          <input type="number" className="reservation-input" value={numGuests} onChange={e => setNumGuests(e.target.value)} />
         </div>
         <button className="reservation-button" type="submit">Book Now</button>
       </form>
