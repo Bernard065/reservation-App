@@ -10,12 +10,12 @@ class ReservationsController < ApplicationController
     end
 
     def create
-        room = Room.find(params[:room_id])
-        @reservation = Reservation.new(reservation_params.merge(room: room, user_id: session[:user_id]))
+        @reservation = Reservation.new(reservation_params)
+        @reservation.user_id = session[:user_id]
         if @reservation.save!
-          render json: @reservation, status: :created
+            render json: @reservation, status: :created
         else
-            render json: { errors: @reservation.errors.full_messages }, status: :unprocessable_entity
+            render json: @reservation.errors, status: :unprocessable_entity
         end
     end
 
@@ -39,7 +39,7 @@ class ReservationsController < ApplicationController
     private
 
     def reservation_params
-        params.permit(:start_date, :end_date, :num_guests)
+        params.permit(:start_date, :end_date, :num_guests, :room_id)
     end
 
 

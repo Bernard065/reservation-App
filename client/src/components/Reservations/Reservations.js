@@ -9,33 +9,33 @@ const Reservations = ({ user, room }) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [numGuests, setNumGuests] = useState('')
-  const [error, setError] = useState([]);
+  const [errors, setErrors] = useState([]);
   
   const navigate = useNavigate();
 
-  const handleBooking = async(event) => {
+  const handleBooking = (event) => {
     event.preventDefault();
-    const response = await fetch('/reservations', {
-      method: "POST",
+    fetch('/reservations',{
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        start_date: startDate,
-        end_date: endDate,
-        num_guests: numGuests,
-        user_id: user.id,
-        room_id: room.id,
-      }),
-    });
-    const data = await response.json();
-    //navigate("/my-reservations");
-  
+        room_id: room.id, start_date: startDate, end_date: endDate,num_guests: numGuests})
+    })
+      .then(response => {
+        if (response.ok) {
+          navigate('/');
+          window.alert('Reservation made successfully!');
+        } else {
+          throw new Error('Unable to make a reservation');
+        }
+      })
+      .catch(error => {
+        setErrors([error.message])
+      })
   }
-
-  // if (!room) {
-  //   return <p>Loading...</p>;
-  // }
+  
   
   return (
     <div className="reservation-container">
@@ -57,6 +57,15 @@ const Reservations = ({ user, room }) => {
         </div>
         <button className="reservation-button" type="submit">Book Now</button>
       </form>
+      {errors.length > 0 && (
+        <div className="reservation-errors">
+          <ul>
+            {errors.map(error => (
+              <li key={error}>{error}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   )
 }

@@ -16,11 +16,12 @@ class Reservation < ApplicationRecord
     end
   
     def no_conflicting_reservations
-      if room.reservations.exists?(
-        "start_date <= ? AND end_date >= ?",
-        end_date, start_date
-      )
-        errors.add(:base, "This room is not available during the selected dates")
+      if Reservation.where(room_id: room_id)
+                     .where("start_date < ?", end_date)
+                     .where("end_date > ?", start_date)
+                     .where.not(id: id)
+                     .exists?
+        errors.add(:room_id, "conflicts with an existing reservation")
       end
     end
 end
