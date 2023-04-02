@@ -1,18 +1,33 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './reservation.css'
 
 const ReservationsList = () => {
   const [reservations, setReservations] = useState([]);
+  const [selectedReservation, setSelectedReservation] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch('/reservations')
       .then(response => response.json())
-      .then(data => {
-        setReservations(data.reservations);
-        console.log(data);
+      .then(setReservations)
+  }, []);
+
+  const handleUpdateReservation = (reservation) => {
+    navigate(`/reservations/${reservation.id}/edit`)
+  };
+
+  const handleDeleteReservation = () => {
+    fetch(`/reservations/${selectedReservation.id}`, {
+      method: 'DELETE'
+    })
+      .then(() => {
+        setReservations(reservations.filter(reservation => reservation.id !== selectedReservation.id));
+        setSelectedReservation(null);
       })
       .catch(error => console.error(error));
-  }, []);
+  };
 
   return (
     <div className="reservations-list">
@@ -24,6 +39,8 @@ const ReservationsList = () => {
               <th>Room</th>
               <th>Start Date</th>
               <th>End Date</th>
+              <th>No. of Guests</th>
+              <th>Action</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -33,8 +50,12 @@ const ReservationsList = () => {
                 <td>{reservation.room.name}</td>
                 <td>{reservation.start_date}</td>
                 <td>{reservation.end_date}</td>
+                <td>{reservation.num_guests}</td>
                 <td>
-                  <button className="btn-cancel">Cancel</button>
+                  <button className="btn-cancel" onClick={handleDeleteReservation}>Cancel</button>
+                </td>
+                <td>
+                  <button className="btn-update" onClick={() => handleUpdateReservation(reservation)}>Update</button>
                 </td>
               </tr>
             ))}

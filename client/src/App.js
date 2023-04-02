@@ -11,6 +11,8 @@ import Contact from './pages/Contact/Contact';
 import Footer from './components/Footer/Footer';
 import Reservations from './components/Reservations/Reservations';
 import Profile from './components/Profile/Profile';
+import UpdateReservation from './components/UpdateReservation/UpdateReservation';
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -36,6 +38,7 @@ function App() {
         <Route path="/contact" element={<Contact />} /> 
         <Route path='/footer' element={<Footer />} />
         <Route path='/reservations' element={<Reservations user={user} room={room} />} />
+        <Route path='/reservations/:id/edit' element={<UpdateReservation />} />
         <Route path='/profile' element={<Profile user={user} setUser={setUser} />} />
       </Routes>
     </>

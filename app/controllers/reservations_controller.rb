@@ -9,6 +9,16 @@ class ReservationsController < ApplicationController
         render json: @reservations, include: :room, status: :ok
     end
 
+    def show
+        @reservation = Reservation.includes(:room).where(user_id: session[:user_id], id: params[:id]).first
+        if @reservation
+          render json: @reservation, include: :room, status: :ok
+        else
+          render json: { error: "Reservation not found" }, status: :not_found
+        end
+    end
+      
+
     def create
         @reservation = Reservation.new(reservation_params)
         @reservation.user_id = session[:user_id]
