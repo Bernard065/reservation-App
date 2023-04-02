@@ -22,13 +22,20 @@ const LoginForm = ({ onLogin }) => {
         }).then((r) => {
             setIsLoading(false);
             if (r.ok) {
-                r.json().then((user) => onLogin(user));
-                navigate('/')
+                r.json().then((user) => {
+                    onLogin(user);
+                    if (user.admin) {
+                        navigate('/admin');
+                    } else {
+                        navigate('/');
+                    }
+                });
             } else {
                 r.json().then((error) => setErrors([error.errors]));
             }
         })
     }
+    
   return (
     <form onSubmit={handleSubmit}>
         <FormField>

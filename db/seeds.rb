@@ -6,16 +6,17 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-puts "🦸‍♀️ Seeding powers..."
+puts "🦸‍♀️ Seeding..."
 
 # Create 10 users
-10.times do
+10.times do |n|
   User.create(
     username: Faker::Internet.unique.username,
     email: Faker::Internet.unique.email,
     password: 'password',
     first_name: Faker::Name.first_name,
-    last_name: Faker::Name.last_name
+    last_name: Faker::Name.last_name,
+    admin: n < 3 
   )
 end
 

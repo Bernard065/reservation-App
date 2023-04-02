@@ -12,6 +12,7 @@ import Footer from './components/Footer/Footer';
 import Reservations from './components/Reservations/Reservations';
 import Profile from './components/Profile/Profile';
 import UpdateReservation from './components/UpdateReservation/UpdateReservation';
+import AdminDashboard from './components/AdminDashboard/AdminDashboard';
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
         <Route path='/reservations' element={<Reservations user={user} room={room} />} />
         <Route path='/reservations/:id/edit' element={<UpdateReservation />} />
         <Route path='/profile' element={<Profile user={user} setUser={setUser} />} />
+        <Route path='/admin' element={<AdminDashboard />} />
       </Routes>
     </>
   );

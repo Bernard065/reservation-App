@@ -2,6 +2,11 @@ class UsersController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
 
 
+    def index
+        @user = User.all
+        render json: @user, status: :ok
+    end
+
     def show
         @user = User.find_by(id: session[:user_id])
         if @user
@@ -35,7 +40,7 @@ class UsersController < ApplicationController
     private
 
     def user_params
-        params.permit(:username, :email, :password, :password_confirmation, :first_name, :last_name)
+        params.permit(:username, :email, :password, :password_confirmation, :first_name, :last_name, :admin)
     end
 
     def render_unprocessable_entity_response(invalid)

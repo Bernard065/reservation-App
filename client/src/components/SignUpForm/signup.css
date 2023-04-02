@@ -1,0 +1,10 @@
+.admin-field {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .admin-input {
+    margin-left: 10px;
+  }
+  

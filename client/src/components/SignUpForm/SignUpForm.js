@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Error, Input, FormField, Label } from '../../styles';
 import { useNavigate } from 'react-router-dom';
+import './signup.css'
 
 const SignUpForm = ({ onLogin }) => {
   const [username, setUsername] = useState('');
@@ -9,6 +10,7 @@ const SignUpForm = ({ onLogin }) => {
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -29,6 +31,7 @@ const SignUpForm = ({ onLogin }) => {
         password_confirmation: passwordConfirmation,
         first_name: firstName,
         last_name: lastName,
+        admin: isAdmin
       }),
     }).then((r) => {
       setIsLoading(false);
@@ -36,8 +39,11 @@ const SignUpForm = ({ onLogin }) => {
         r.json().then((user) => {
           onLogin(user);
           window.alert("Registration Successful! You will be logged in automatically")
-
-          navigate('/');
+          if (isAdmin) {
+            navigate('/admin');
+          } else {
+            navigate('/')
+          }
         
         });
       } else {
@@ -107,11 +113,21 @@ const SignUpForm = ({ onLogin }) => {
           onChange={(e) => setLastName(e.target.value)}
         />
       </FormField>
+      <div className='admin-field'>
+        <label htmlFor='isAdmin'>Are you an admin?</label>
+        <input
+          type='checkbox'
+          id='isAdmin'
+          checked={isAdmin}
+          onChange={(e) => setIsAdmin(e.target.checked)}
+          className='admin-input'
+        />
+      </div>
       <FormField>
         <Button type='submit'>{isLoading ? 'Loading...' : 'Sign Up'}</Button>
       </FormField>
       <FormField>
-        {errors.map((error) => (
+        {Array.isArray(errors) && errors.map((error) => (
           <Error key={error}>{error}</Error>
         ))}
       </FormField>

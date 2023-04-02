@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_29_201947) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_02_221556) do
   create_table "reservations", force: :cascade do |t|
     t.date "start_date"
     t.date "end_date"
@@ -57,6 +57,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_29_201947) do
     t.string "last_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "admin"
   end
 
   add_foreign_key "reservations", "rooms"
