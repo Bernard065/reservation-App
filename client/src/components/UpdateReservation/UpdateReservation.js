@@ -38,7 +38,7 @@ const UpdateReservation = () => {
       .then(() => {
         setSuccess(true);
         alert('Reservation updated successfully!');
-        navigate('/profile');
+        navigate('/my_reservations');
       })
       .catch(error => console.error(error))
   };

@@ -13,6 +13,7 @@ import Reservations from './components/Reservations/Reservations';
 import Profile from './components/Profile/Profile';
 import UpdateReservation from './components/UpdateReservation/UpdateReservation';
 import AdminDashboard from './components/AdminDashboard/AdminDashboard';
+import ReservationsList from './components/ReservationsList/ReservationsList';
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
         <Route path='/reservations/:id/edit' element={<UpdateReservation />} />
         <Route path='/profile' element={<Profile user={user} setUser={setUser} />} />
         <Route path='/admin' element={<AdminDashboard />} />
+        <Route path='my_reservations' element={<ReservationsList />} />
       </Routes>
     </>
   );

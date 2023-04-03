@@ -25,7 +25,7 @@ const Reservations = ({ user, room }) => {
     })
       .then(response => {
         if (response.ok) {
-          navigate('/');
+          navigate('/my_reservations');
           window.alert('Reservation made successfully!');
         } else {
           throw new Error('Unable to make a reservation');

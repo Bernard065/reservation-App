@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import AddRoom from '../AddRoom/AddRoom';
 import './admin.css';
 
 function AdminDashboard() {
@@ -34,6 +35,7 @@ function AdminDashboard() {
           ))}
         </tbody>
       </table>
+      <AddRoom />
     </div>
   );
 }

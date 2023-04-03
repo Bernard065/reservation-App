@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './reservation.css'
+import './reservation.css';
 
 const ReservationsList = () => {
   const [reservations, setReservations] = useState([]);
   const [selectedReservation, setSelectedReservation] = useState(null);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,12 +17,12 @@ const ReservationsList = () => {
     navigate(`/reservations/${reservation.id}/edit`)
   };
 
-  const handleDeleteReservation = () => {
-    fetch(`/reservations/${selectedReservation.id}`, {
+  const handleDeleteReservation = (reservation) => {
+    fetch(`/reservations/${reservation.id}`, {
       method: 'DELETE'
     })
       .then(() => {
-        setReservations(reservations.filter(reservation => reservation.id !== selectedReservation.id));
+        setReservations(reservations.filter(res => res.id !== reservation.id));
         setSelectedReservation(null);
       })
       .catch(error => console.error(error));
@@ -46,13 +45,13 @@ const ReservationsList = () => {
           </thead>
           <tbody>
             {reservations.map(reservation => (
-              <tr key={reservation.id}>
+              <tr key={reservation.id} onClick={() => setSelectedReservation(reservation)} className={selectedReservation && selectedReservation.id === reservation.id ? "selected" : ""}>
                 <td>{reservation.room.name}</td>
                 <td>{reservation.start_date}</td>
                 <td>{reservation.end_date}</td>
                 <td>{reservation.num_guests}</td>
                 <td>
-                  <button className="btn-cancel" onClick={handleDeleteReservation}>Cancel</button>
+                  <button className="btn-cancel" onClick={() => handleDeleteReservation(reservation)}>Cancel</button>
                 </td>
                 <td>
                   <button className="btn-update" onClick={() => handleUpdateReservation(reservation)}>Update</button>
