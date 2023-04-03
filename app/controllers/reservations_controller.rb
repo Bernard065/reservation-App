@@ -9,6 +9,12 @@ class ReservationsController < ApplicationController
         render json: @reservations, include: :room, status: :ok
     end
 
+    def all_reservations
+        @reservations = Reservation.all
+        render json: @reservations, status: :ok
+    end
+      
+
     def show
         @reservation = Reservation.includes(:room).where(user_id: session[:user_id], id: params[:id]).first
         if @reservation
