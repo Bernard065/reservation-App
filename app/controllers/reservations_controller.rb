@@ -1,74 +1,77 @@
 class ReservationsController < ApplicationController
     before_action :authorize
-
+    before_action :authorize_admin, only: [:admin_index]
+  
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
-
+  
     def index
-        @reservations = Reservation.includes(:room).where(user_id: session[:user_id]).order(created_at: :desc)
-        render json: @reservations, include: :room, status: :ok
+      @reservations = Reservation.where(user_id: session[:user_id]).includes(:room).order(created_at: :desc)
+      render json: @reservations, include: :room, status: :ok
     end
-
+  
     def admin_index
-        @reservations = Reservation.includes(:user, :room).order(created_at: :desc)
-        render json: @reservations, include: [:user, :room], status: :ok
+      @reservations = Reservation.includes(:user, :room).order(created_at: :desc)
+      render json: @reservations, include: [:user, :room], status: :ok
     end
-      
-
+  
     def show
-        @reservation = Reservation.includes(:room).where(user_id: session[:user_id], id: params[:id]).first
-        if @reservation
-          render json: @reservation, include: :room, status: :ok
-        else
-          render json: { error: "Reservation not found" }, status: :not_found
-        end
+      @reservation = Reservation.where(user_id: session[:user_id], id: params[:id]).includes(:room).first
+      if @reservation
+        render json: @reservation, include: :room, status: :ok
+      else
+        render json: { error: "Reservation not found" }, status: :not_found
+      end
     end
-      
-
+  
     def create
-        @reservation = Reservation.new(reservation_params)
-        @reservation.user_id = session[:user_id]
-        if @reservation.save!
-            render json: @reservation, status: :created
-        else
-            render json: @reservation.errors, status: :unprocessable_entity
-        end
+      @reservation = Reservation.new(reservation_params.merge(user_id: session[:user_id]))
+      if @reservation.save
+        render json: @reservation, status: :created
+      else
+        render json: @reservation.errors, status: :unprocessable_entity
+      end
     end
-
+  
     def update
-        @reservation = Reservation.where(user_id: session[:user_id], id: params[:id]).first
-        if @reservation.update!(reservation_params)
-          render json: @reservation, status: :ok
-        else
-            render json: { errors: @reservation.errors.full_messages }, status: :unprocessable_entity
-        end
+      @reservation = Reservation.where(user_id: session[:user_id], id: params[:id]).first
+      if @reservation.update(reservation_params)
+        render json: @reservation, status: :ok
+      else
+        render json: { errors: @reservation.errors.full_messages }, status: :unprocessable_entity
+      end
     end
-      
-
+  
     def destroy
-        @reservation = Reservation.where(user_id: session[:user_id]).find(params[:id])
+      @reservation = Reservation.where(user_id: session[:user_id], id: params[:id]).first
+      if @reservation
         @reservation.destroy
         head :no_content
-    end
-
-
-    private
-
-    def reservation_params
-        params.permit(:start_date, :end_date, :num_guests, :room_id)
-    end
-
-
-    def authorize
-        return render json: { error: "Not authorized" }, status: :unauthorized unless session.include? :user_id
-    end
-
-    def render_not_found_response
+      else
         render json: { error: "Reservation not found" }, status: :not_found
+      end
     end
-
+  
+    private
+  
+    def reservation_params
+      params.permit(:start_date, :end_date, :num_guests, :room_id)
+    end
+  
+    def authorize
+      return render json: { error: "Not authorized" }, status: :unauthorized unless session[:user_id]
+    end
+  
+    def authorize_admin
+      return render json: { error: "Not authorized" }, status: :unauthorized unless User.find(session[:user_id]).admin?
+    end
+  
+    def render_not_found_response
+      render json: { error: "Reservation not found" }, status: :not_found
+    end
+  
     def render_unprocessable_entity_response(invalid)
-        render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
     end
-
 end
+  
