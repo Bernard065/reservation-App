@@ -9,9 +9,9 @@ class ReservationsController < ApplicationController
         render json: @reservations, include: :room, status: :ok
     end
 
-    def all_reservations
-        @reservations = Reservation.all
-        render json: @reservations, status: :ok
+    def admin_index
+        @reservations = Reservation.includes(:user, :room).order(created_at: :desc)
+        render json: @reservations, include: [:user, :room], status: :ok
     end
       
 

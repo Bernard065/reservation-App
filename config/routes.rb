@@ -8,7 +8,8 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   post "/signup", to: "users#create"
   delete "/logout", to: "sessions#destroy"
-  get '/all_reservations', to: 'reservations#all_reservations'
+  get '/admin/reservations', to: 'reservations#admin_index'
+
   
 
   

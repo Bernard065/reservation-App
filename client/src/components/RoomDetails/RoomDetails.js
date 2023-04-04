@@ -14,6 +14,7 @@ const RoomDetails = ({ user, room, setRoom }) => {
     fetch(`/rooms/${id}`)
       .then(response => response.json())
       .then(setRoom);
+
   }, [id, setRoom]);
 
   const handleBookNowClick = () => {

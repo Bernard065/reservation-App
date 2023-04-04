@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import AddRoom from '../AddRoom/AddRoom';
+import AllReservations from '../AllReservations/AllReservations';
 import './admin.css';
 
 function AdminDashboard() {
@@ -36,6 +37,7 @@ function AdminDashboard() {
         </tbody>
       </table>
       <AddRoom />
+      <AllReservations />
     </div>
   );
 }

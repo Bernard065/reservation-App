@@ -42,6 +42,7 @@ const Reservations = ({ user, room }) => {
       <h1>Name: {room.name}</h1>
       <p>Description: {room.description}</p>
       <p>Price: ${room.price}</p>
+      <p>Capacity: {room.capacity} person(s)</p>
       <form onSubmit={handleBooking}>
         <div className="reservation-date">
           <label className="reservation-label">Check-in Date:</label>
