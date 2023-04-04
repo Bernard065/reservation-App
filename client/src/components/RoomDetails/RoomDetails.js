@@ -7,22 +7,28 @@ import './roomdetails.css';
 const RoomDetails = ({ user, room, setRoom }) => {
   const { id } = useParams();
   const [errorMessage, setErrorMessage] = useState('');
- 
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`/rooms/${id}`)
-      .then(response => response.json())
-      .then(setRoom);
+    const fetchRoom = async () => {
+      try {
+        const response = await fetch(`/rooms/${id}`);
+        const data = await response.json();
+        setRoom(data);
+      } catch (error) {
+        setErrorMessage('Error fetching room details');
+      }
+    };
 
+    fetchRoom();
   }, [id, setRoom]);
 
   const handleBookNowClick = () => {
-    if (!user){
-      setErrorMessage("You must be logged in to make a reservation")
-      return
+    if (!user) {
+      navigate('/login');
+    } else {
+      navigate('/reservations');
     }
-    navigate('/reservations');
   };
 
   if (!room) {
