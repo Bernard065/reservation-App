@@ -1,56 +1,108 @@
 .add-room {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin-top: 50px;
+}
+
+.add-room h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.add-room form {
+  display: grid;
+  gap: 10px;
+}
+
+.form-group {
+  display: grid;
+  gap: 10px;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.input-field {
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+
+.form-group-helper {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #777;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  color: #555;
+  cursor: pointer;
+}
+
+.checkbox-field {
+  margin-right: 5px;
+  height: 20px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  outline: none;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.checkbox-field:checked  {
+  background-color: #3399ff;
+  border-color: #3399ff;
+}
+
+
+.label-text {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 16px;
+  font-weight: 500;
+  color: #444;
+}
+
+.submit-button {
+  margin: auto;
+  display: block;
+  margin-top: 20px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 3px;
+  background-color: #d347d8;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.submit-button:hover {
+  background-color: #940ca0;
+}
+
+@media only screen and (max-width: 600px) {
+  .add-room {
+    max-width: 90%;
   }
-  
-  h1 {
-    font-size: 36px;
-    margin-bottom: 30px;
-  }
-  
-  form {
-    width: 100%;
-    max-width: 500px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  label {
-    font-size: 18px;
-    margin-bottom: 5px;
-    display: block;
-  }
-  
-  input[type="text"],
-  input[type="number"],
-  textarea {
-    font-size: 16px;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    width: 100%;
-  }
-  
-  input[type="checkbox"] {
-    margin-right: 5px;
-  }
-  
-  button[type="submit"] {
-    font-size: 18px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #b637dd;
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #660469;
-  }
-  
+}
