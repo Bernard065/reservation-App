@@ -8,24 +8,40 @@ const ReservationsList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('/reservations')
-      .then(response => response.json())
-      .then(setReservations)
+    const fetchReservations = async () => {
+      try {
+        const response = await fetch('/reservations', {
+          method: 'GET',
+          credentials: 'include'
+        });
+        const data = await response.json();
+        setReservations(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchReservations();
   }, []);
 
   const handleUpdateReservation = (reservation) => {
     navigate(`/reservations/${reservation.id}/edit`)
   };
 
-  const handleDeleteReservation = (reservation) => {
-    fetch(`/reservations/${reservation.id}`, {
-      method: 'DELETE'
-    })
-      .then(() => {
+  const handleDeleteReservation = async (reservation) => {
+    try {
+      const response = await fetch(`/reservations/${reservation.id}`, {
+        method: 'DELETE',
+        credentials: 'include'
+      });
+      if (response.ok) {
         setReservations(reservations.filter(res => res.id !== reservation.id));
         setSelectedReservation(null);
-      })
-      .catch(error => console.error(error));
+      } else {
+        throw new Error('Unable to delete reservation');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

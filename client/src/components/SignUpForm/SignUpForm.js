@@ -15,42 +15,45 @@ const SignUpForm = ({ onLogin }) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors([]);
     setIsLoading(true);
-    fetch('signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username,
-        email,
-        password,
-        password_confirmation: passwordConfirmation,
-        first_name: firstName,
-        last_name: lastName,
-        admin: isAdmin
-      }),
-    }).then((r) => {
+    try {
+      const response = await fetch('signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          password_confirmation: passwordConfirmation,
+          first_name: firstName,
+          last_name: lastName,
+          admin: isAdmin
+        }),
+      });
       setIsLoading(false);
-      if (r.ok) {
-        r.json().then((user) => {
-          onLogin(user);
-          window.alert("Registration Successful! You will be logged in automatically")
-          if (isAdmin) {
-            navigate('/admin');
-          } else {
-            navigate('/')
-          }
-        
-        });
+      if (response.ok) {
+        const user = await response.json();
+        onLogin(user);
+        window.alert("Registration Successful! You will be logged in automatically")
+        if (isAdmin) {
+          navigate('/admin');
+        } else {
+          navigate('/')
+        }
       } else {
-        r.json().then((error) => setErrors(error.errors));
+        const error = await response.json();
+        setErrors(error.errors);
       }
-    });
+    } catch (error) {
+      console.error(error);
+    }
   };
+  
   return (
     <form onSubmit={handleSubmit}>
       <FormField>

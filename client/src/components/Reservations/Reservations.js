@@ -5,7 +5,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './reservations.css'
 
 const Reservations = ({ user, room }) => {
-  //const [room, setRoom] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [numGuests, setNumGuests] = useState('')
@@ -13,27 +12,27 @@ const Reservations = ({ user, room }) => {
   
   const navigate = useNavigate();
 
-  const handleBooking = (event) => {
+  const handleBooking = async (event) => {
     event.preventDefault();
-    fetch('/reservations',{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        room_id: room.id, start_date: startDate, end_date: endDate,num_guests: numGuests})
-    })
-      .then(response => {
-        if (response.ok) {
-          navigate('/my_reservations');
-          window.alert('Reservation made successfully!');
-        } else {
-          throw new Error('Unable to make a reservation');
-        }
-      })
-      .catch(error => {
-        setErrors([error.message])
-      })
+    try {
+      const response = await fetch('/reservations',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include', // include cookies in the request
+        body: JSON.stringify({
+          room_id: room.id, start_date: startDate, end_date: endDate,num_guests: numGuests})
+      });
+      if (response.ok) {
+        navigate('/my_reservations');
+        window.alert('Reservation made successfully!');
+      } else {
+        throw new Error('Unable to make a reservation');
+      }
+    } catch (error) {
+      setErrors([error.message])
+    }
   }
   
   

@@ -16,16 +16,19 @@ import AdminDashboard from './components/AdminDashboard/AdminDashboard';
 import ReservationsList from './components/ReservationsList/ReservationsList';
 
 
-function App() {
+const App = () => {
   const [user, setUser] = useState(null);
   const [room, setRoom] = useState(null);
 
   useEffect(() => {
-    fetch("/me").then((r) => {
-      if (r.ok) {
-        r.json().then((user) => setUser(user));
+    async function fetchUser() {
+      const response = await fetch('/me', { credentials: 'include' });
+      if (response.ok) {
+        const user = await response.json();
+        setUser(user);
       }
-    })
+    }
+    fetchUser();
   }, []);
 
   return (

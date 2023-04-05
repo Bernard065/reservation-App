@@ -9,11 +9,19 @@ const Rooms = () => {
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState('');
   
-
   useEffect(() => {
-    fetch('/rooms')
-      .then(response => response.json())
-      .then(setRooms);
+    const fetchRooms = async () => {
+      try {
+        const response = await fetch('/rooms', {
+          credentials: 'include'
+        });
+        const data = await response.json();
+        setRooms(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchRooms();
   }, []);
 
   const filterRooms = (room) => {
@@ -28,8 +36,6 @@ const Rooms = () => {
   }
 
   const filteredRooms = rooms.filter(filterRooms)
-
-
 
   return (
     <div className='rooms-container'>

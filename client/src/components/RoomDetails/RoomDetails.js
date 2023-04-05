@@ -12,7 +12,7 @@ const RoomDetails = ({ user, room, setRoom }) => {
   useEffect(() => {
     const fetchRoom = async () => {
       try {
-        const response = await fetch(`/rooms/${id}`);
+        const response = await fetch(`/rooms/${id}`, { credentials: 'include' });
         const data = await response.json();
         setRoom(data);
       } catch (error) {

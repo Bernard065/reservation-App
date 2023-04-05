@@ -12,31 +12,43 @@ const UpdateUser = () => {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    fetch(`/users/${id}`)
-      .then(response => response.json())
-      .then(data => {
+    async function fetchUser() {
+      try {
+        const response = await fetch(`/users/${id}`, { credentials: 'include' });
+        const data = await response.json();
         setUser(data);
         setUsername(data.username);
         setEmail(data.email);
         setFirstName(data.first_name);
         setLastName(data.last_name);
-      })
-      .catch(error => console.log(error));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchUser();
   }, [id]);
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
     const data = { username, email, first_name: firstName, last_name: lastName };
-    fetch(`/users/${id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-      .then(response => response.json())
-      .then(() => setSuccess(true))
-      .catch(error => console.log(error));
+    try {
+      const response = await fetch(`/users/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data),
+        credentials: 'include'
+      });
+      const result = await response.json();
+      if (result.success) {
+        setSuccess(true);
+      } else {
+        console.log(result.error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

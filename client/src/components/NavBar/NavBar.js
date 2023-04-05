@@ -13,15 +13,15 @@ const NavBar = ({ user, setUser, onLogin }) => {
     setIsOpen(!isOpen);
   };
 
-  const handleLogout = () => {
-    fetch('/logout', {
+  const handleLogout = async () => {
+    const response = await fetch('/logout', {
       method: 'DELETE',
-    }).then((r) => {
-      if (r.ok) {
-        setUser(null);
-        navigate('/')
-      }
+      credentials: 'include',
     });
+    if (response.ok) {
+      setUser(null);
+      navigate('/');
+    }
   };
 
   return (
@@ -49,7 +49,7 @@ const NavBar = ({ user, setUser, onLogin }) => {
               </button>
               <div className="dropdown-content">
                 <Link to="/profile">Profile</Link>
-                <button onClick={handleLogout}>Logout</button>
+                <button onClick={handleLogout} className="logout-btn">Logout</button>
               </div>
             </li>
           ) : (

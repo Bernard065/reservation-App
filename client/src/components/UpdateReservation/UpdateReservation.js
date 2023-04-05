@@ -13,15 +13,19 @@ const UpdateReservation = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`/reservations/${id}`)
-      .then(response => response.json())
-      .then(data => {
+    const fetchReservation = async () => {
+      try {
+        const response = await fetch(`/reservations/${id}`, { credentials: 'include' });
+        const data = await response.json();
         setReservation(data);
         setStartDate(data.start_date);
         setEndDate(data.end_date);
         setNumGuests(data.num_guests);
-      })
-      .catch(error => console.log(error));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchReservation();
   }, [id]);
 
   const handleSubmit = event => {
@@ -32,6 +36,7 @@ const UpdateReservation = () => {
       headers: {
         'Content-Type': 'application/json',
       },
+      credentials: 'include',
       body: JSON.stringify(data),
     })
       .then(response => response.json())
