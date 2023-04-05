@@ -59,6 +59,8 @@
 .show-nav {
   height: 220px;
   margin-top: 0.5rem;
+  overflow: hidden;
+  position: relative;
 }
 
 .dropdown {
@@ -88,7 +90,7 @@
   margin-top: 8px;
   margin-left: auto;
   margin-right: auto;
-  background-color: var(--primaryColor);
+  background-color:  rgb(192, 142, 192);
   color: white;
   border: none;
   border-radius: 5px;
@@ -97,7 +99,7 @@
 }
 
 .dropdown-content button:hover {
-  background-color: rgb(158, 150, 158)
+  background-color: rgb(121, 75, 121)
 }
 
 .dropbtn {
@@ -134,10 +136,22 @@
   .nav-links li {
     margin-right: 2rem;
   }
+  .show-nav {
+    height: auto;
+    margin-top: 1rem;
+    overflow: hidden;
+  }
 }
 
 .logout-btn {
   background-color: red;
   color: white;
   padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.logout-btn:hover {
+  background-color: #c40000;
+  transition: background-color 0.3s ease-in-out;
 }
