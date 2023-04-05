@@ -1,4 +1,5 @@
 import React from 'react'
+import Footer from '../Footer/Footer'
 import ReservationsList from '../ReservationsList/ReservationsList'
 import UpdateUser from '../UpdateUser/UpdateUser'
 
@@ -7,6 +8,7 @@ const Profile = () => {
     <div>
         <UpdateUser />
         <ReservationsList />
+        <Footer />
     </div>
   )
 }

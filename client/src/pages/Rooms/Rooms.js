@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer'
 import { RoomsContainer, RoomCard, Title } from '../../styles/RoomsStyles';
 import './rooms.css'
 
@@ -64,6 +65,7 @@ const Rooms = () => {
           </RoomCard>
         ))}
       </RoomsContainer>
+      <Footer />
     </div>
   );
 };

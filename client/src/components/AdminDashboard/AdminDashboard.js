@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AddRoom from '../AddRoom/AddRoom';
 import AllReservations from '../AllReservations/AllReservations';
+import Footer from '../Footer/Footer';
 import './admin.css';
 
 function FetchAllUsers() {
@@ -23,36 +24,39 @@ function FetchAllUsers() {
   }, []);
 
   return (
-    <div className="container">
-      <h1 className="title">All Users</h1>
-      {error && <p className="error">{error}</p>}
-      {!error && (
-        <>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Username</th>
-                <th>Email</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map(user => (
-                <tr key={user.id}>
-                  <td>{user.username}</td>
-                  <td>{user.email}</td>
-                  <td>{user.first_name}</td>
-                  <td>{user.last_name}</td>
+    <>
+      <div className="container">
+        <h1 className="title">All Users</h1>
+        {error && <p className="error">{error}</p>}
+        {!error && (
+          <>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-          <AddRoom />
-          <AllReservations />
-        </>
-      )}
-    </div>
+              </thead>
+              <tbody>
+                {users.map(user => (
+                  <tr key={user.id}>
+                    <td>{user.username}</td>
+                    <td>{user.email}</td>
+                    <td>{user.first_name}</td>
+                    <td>{user.last_name}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <AddRoom />
+            <AllReservations />
+          </>
+        )}
+      </div>
+      <Footer />
+    </>
   );
 }
 
