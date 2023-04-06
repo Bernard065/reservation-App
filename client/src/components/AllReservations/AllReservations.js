@@ -22,6 +22,21 @@ const AllReservations = () => {
     fetchData();
   }, []);
 
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`/admin/delete_reservation?id=${id}`, {
+        method: 'DELETE',
+        credentials: 'include'
+      });
+      if (!response.ok) {
+        throw new Error('Error deleting reservation');
+      }
+      setReservations(reservations.filter(reservation => reservation.id !== id));
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
     <div className="reservations-container">
       <h1>All Reservations</h1>
@@ -35,6 +50,7 @@ const AllReservations = () => {
             <th>Start Date</th>
             <th>End Date</th>
             <th>Number of Guests</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -46,6 +62,9 @@ const AllReservations = () => {
               <td>{reservation.start_date}</td>
               <td>{reservation.end_date}</td>
               <td>{reservation.num_guests}</td>
+              <td>
+                <button className="cancel-button" onClick={() => handleDelete(reservation.id)}>Delete</button>
+              </td>
             </tr>
           ))}
         </tbody>

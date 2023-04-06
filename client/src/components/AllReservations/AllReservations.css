@@ -18,6 +18,25 @@
   text-align: center;
 }
 
+button.cancel-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button.cancel-button:hover {
+  background-color: #cc0000;
+}
+
+
 @media only screen and (max-width: 768px) {
   .reservations-table th,
   .reservations-table td {

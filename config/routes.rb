@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :users, only: [:index, :show, :create, :update]
+  resources :users, only: [:index, :show, :create, :update, :destroy]
   resources :reservations, only: [:index, :show, :create, :update, :destroy]
   resources :reviews, only: [:index, :create]
   resources :rooms
@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   post "/signup", to: "users#create"
   delete "/logout", to: "sessions#destroy"
   get '/admin/reservations', to: 'reservations#admin_index'
+  delete "/admin/delete_reservation", to: "reservations#delete_reservation"
+
 
   
 

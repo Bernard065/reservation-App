@@ -23,6 +23,22 @@ function FetchAllUsers() {
       .catch(error => setError(error.message));
   }, []);
 
+  const handleDelete = async (userId) => {
+    try {
+      const response = await fetch(`/users/${userId}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+      if (response.ok) {
+        setUsers(users.filter(user => user.id !== userId));
+      } else {
+        throw new Error('Something went wrong while deleting the user.');
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   return (
     <>
       <div className="container">
@@ -33,19 +49,27 @@ function FetchAllUsers() {
             <table className="table">
               <thead>
                 <tr>
+                  <th>User Id</th>
                   <th>Username</th>
                   <th>Email</th>
                   <th>First Name</th>
                   <th>Last Name</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map(user => (
                   <tr key={user.id}>
+                    <td>{user.id}</td>
                     <td>{user.username}</td>
                     <td>{user.email}</td>
                     <td>{user.first_name}</td>
                     <td>{user.last_name}</td>
+                    <td>
+                      <button className="delete-button" onClick={() => handleDelete(user.id)}>
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>

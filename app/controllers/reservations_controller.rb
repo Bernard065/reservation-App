@@ -60,6 +60,12 @@ class ReservationsController < ApplicationController
         render json: { error: "Reservation not found" }, status: :not_found
       end
     end
+
+    def delete_reservation
+      @reservation = Reservation.find(params[:id])
+      @reservation.destroy
+      head :no_content
+    end
   
     private
   
