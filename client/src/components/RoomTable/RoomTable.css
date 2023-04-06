@@ -1,0 +1,54 @@
+.room-table-container {
+    margin: 80px;
+  }
+  
+  .room-table-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .room-table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  .room-table th,
+  .room-table td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .room-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+  .delete-button {
+    background-color: #dc3545;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 8px 16px;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .delete-button:hover {
+    background-color: #c82333;
+  }
+  
+  
+  @media (max-width: 768px) {
+    .room-table-container {
+      margin: 40px;
+    }
+  
+    .room-table {
+      max-width: 100%;
+    }
+  }
+  

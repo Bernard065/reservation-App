@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AddRoom from '../AddRoom/AddRoom';
 import AllReservations from '../AllReservations/AllReservations';
 import Footer from '../Footer/Footer';
+import RoomTable from '../RoomTable/RoomTable';
 import './admin.css';
 
 function FetchAllUsers() {
@@ -76,6 +77,7 @@ function FetchAllUsers() {
             </table>
             <AddRoom />
             <AllReservations />
+            <RoomTable />
           </>
         )}
       </div>
