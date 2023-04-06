@@ -25,6 +25,14 @@ class ReservationsController < ApplicationController
     end
   
     def create
+      # Check if the room is available within the range of start_date and end_date
+      reservations = Reservation.where(room_id: params[:room_id]).where("(start_date <= ? AND end_date >= ?) OR (start_date <= ? AND end_date >= ?) OR (start_date >= ? AND end_date <= ?)", params[:start_date], params[:start_date], params[:end_date], params[:end_date], params[:start_date], params[:end_date])
+      if reservations.present?
+        render json: { error: "The room is already booked during that period" }, status: :unprocessable_entity
+        return
+      end
+    
+      # Create the reservation if the room is available
       @reservation = Reservation.new(reservation_params.merge(user_id: session[:user_id]))
       if @reservation.save
         render json: @reservation, status: :created
@@ -32,6 +40,7 @@ class ReservationsController < ApplicationController
         render json: @reservation.errors, status: :unprocessable_entity
       end
     end
+    
   
     def update
       @reservation = Reservation.where(user_id: session[:user_id], id: params[:id]).first

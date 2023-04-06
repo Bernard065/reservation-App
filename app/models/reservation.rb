@@ -4,7 +4,7 @@ class Reservation < ApplicationRecord
   
     validates :start_date, presence: true
     validates :end_date, presence: true
-    validates :num_guests, presence: true
+    validates :num_guests, presence: true, numericality: { greater_than_or_equal_to: 0 }
     validate :end_date_after_start_date
     validate :no_conflicting_reservations
   

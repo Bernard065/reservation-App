@@ -7,13 +7,21 @@ import './reservations.css'
 const Reservations = ({ user, room }) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [numGuests, setNumGuests] = useState('')
+  const [numGuests, setNumGuests] = useState('');
   const [errors, setErrors] = useState([]);
   
   const navigate = useNavigate();
 
   const handleBooking = async (event) => {
     event.preventDefault();
+    if (numGuests <= 0 || numGuests > room.capacity) {
+      setErrors(['Number of guests should be greater than 0 and less than or equal to the room capacity.']);
+      return;
+    }
+    if (startDate >= endDate) {
+      setErrors(['End date should be greater than start date.']);
+      return;
+    }
     try {
       const response = await fetch('/reservations',{
         method: 'POST',
@@ -22,18 +30,21 @@ const Reservations = ({ user, room }) => {
         },
         credentials: 'include', // include cookies in the request
         body: JSON.stringify({
-          room_id: room.id, start_date: startDate, end_date: endDate,num_guests: numGuests})
+          room_id: room.id, start_date: startDate, end_date: endDate, num_guests: numGuests
+        })
       });
       if (response.ok) {
         navigate('/my_reservations');
         window.alert('Reservation made successfully!');
       } else {
-        throw new Error('Unable to make a reservation');
+        const errorResponse = await response.json();
+        setErrors([errorResponse.error]);
       }
     } catch (error) {
       setErrors([error.message])
     }
   }
+  
   
   
   return (
@@ -70,4 +81,4 @@ const Reservations = ({ user, room }) => {
   )
 }
 
-export default Reservations
+export default Reservations;
