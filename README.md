@@ -44,3 +44,9 @@ As a administator, I can create a listing for my room with details such as the n
 As a admin, I can manage my listing by updating information, setting availability, and accepting or declining reservation requests.
 
 As an administrator, I can manage the user database, including the ability to delete users or listings if necessary.
+
+## Installation
+Clone the repository to your local machine: use the git clone command
+Install Ruby dependencies using Bundler: bundle install
+Install the frontend dependencies using npm install --prefix client
+Then run foreman start -f Procfile.dev to start the application, the rails application(backend) will open on port 3000 while the frontend application will open on port 4000
